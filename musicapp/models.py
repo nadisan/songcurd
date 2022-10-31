@@ -10,29 +10,29 @@ class Artiste(models.Model):
     age=models.IntegerField(default='null')
 	
     def __str__(self):
-        return f"(self.first_name, self.last_name)"
+        return f'{self.first_name} {self.last_name}'
 
 class Song(models.Model):
-    artiste = models.ForeignKey(Artiste,on_delete=models.CASCADE,null=True)
-    date_released = models.DateField(null=True)
+    Artiste = models.ForeignKey(Artiste,on_delete=models.CASCADE,null=True)
     title = models.CharField(max_length=400)
+    date_released = models.DateField(null=True)
     likes = models.CharField(max_length=400)
-    artist_id = models.CharField(max_length=40,default='null')
+    artiste_id = models.CharField(max_length=40,default='null')
     
     def __str__(self):
-        return f"{self.title}"
+        return self.title
 	
 	
 
 class Lyric(models.Model):
-	artiste = models.ForeignKey(Artiste,on_delete=models.CASCADE,null=True)
-	song = models.ForeignKey(Song,on_delete=models.CASCADE,null=True)
+	Artiste = models.ForeignKey(Artiste,on_delete=models.CASCADE,null=True)
+	Song = models.ForeignKey(Song,on_delete=models.CASCADE,null=True)
 	content = models.CharField(max_length=2000)
-	Song_id = models.CharField(max_length=40,default='null' )
+	song_id = models.CharField(max_length=40,default='null' )
 
 	
 	def __str__(self):
 		if len(self.content) > 100:
-			return f"{self.content[0:100]}..."
+			return f'{self.content[0:100]}...'
 		else:
-			return f"{self.content}"
+			return f'{self.content}'
