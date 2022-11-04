@@ -15,24 +15,23 @@ class Artiste(models.Model):
 class Song(models.Model):
     Artiste = models.ForeignKey(Artiste,on_delete=models.CASCADE,null=True)
     title = models.CharField(max_length=400)
-    date_released = models.DateField(null=True)
+    date_released = models.DateField(help_text="year-month-date", null=True)
     likes = models.CharField(max_length=400)
-    artiste_id = models.CharField(max_length=40,default='null')
+    artiste_id = models.CharField(max_length=40,null=True, blank=True)
     
     def __str__(self):
-        return self.title
+        return f'{self.title} : sung by  {self.Artiste}'
 	
 	
 
 class Lyric(models.Model):
-	Artiste = models.ForeignKey(Artiste,on_delete=models.CASCADE,null=True)
-	Song = models.ForeignKey(Song,on_delete=models.CASCADE,null=True)
-	content = models.CharField(max_length=2000)
-	song_id = models.CharField(max_length=40,default='null' )
-
-	
-	def __str__(self):
-		if len(self.content) > 100:
-			return f'{self.content[0:100]}...'
-		else:
-			return f'{self.content}'
+    Artiste = models.ForeignKey(Artiste,on_delete=models.CASCADE,null=True)
+    Song = models.ForeignKey(Song,on_delete=models.CASCADE,null=True)
+    content = models.TextField(max_length=1000, help_text="Enter Lyric's of the song")
+    song_id = models.CharField(max_length=40,null=True, blank=True)
+    
+    def __str__(self):
+        if len(self.content) > 10:
+            return f"{self.content[0:10]}...song title: {self.Song.title}"
+        else:
+            return f"{self.content} ...song title: {self.Song.title}"

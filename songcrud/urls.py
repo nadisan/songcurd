@@ -15,10 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic import RedirectView
+from api import views
+
+from rest_framework.urlpatterns import format_suffix_patterns
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('musicapp/', include('musicapp.urls')),
-    path('', RedirectView.as_view(url='musicapp/', permanent=True)),
+    path('musicapp/', views.index),
+    path('musicapp/Artiste', views.Artiste_list),
+    path('musicapp/Song', views.Song_list),
+    path('musicapp/Lyric', views.Lyric_list),
+    path('api-auth/', include('rest_framework.urls')),
+    path('musicapp/Artiste/<int:id>', views.Artiste_detail),
+    path('musicapp/Song/<int:id>', views.Song_detail)
 ]
+urlpatterns = format_suffix_patterns(urlpatterns)
